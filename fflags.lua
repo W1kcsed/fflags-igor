@@ -164,3 +164,57 @@ if not success then
 else
     print("✅ FFlags Optimizer успешно загружен!")
 end
+
+-- Удаление всех текстур и эффектов
+local function removeAllTexturesAndEffects()
+    local textureCount = 0
+    local effectCount = 0
+    local particleCount = 0
+    
+    for _, obj in pairs(workspace:GetDescendants()) do
+        -- Удаляем текстуры
+        if obj:IsA("Texture") or 
+           obj:IsA("Decal") or 
+           obj:IsA("SurfaceAppearance") then
+            obj:Destroy()
+            textureCount = textureCount + 1
+        end
+        
+        -- Удаляем эффекты частиц
+        if obj:IsA("ParticleEmitter") or 
+           obj:IsA("Smoke") or 
+           obj:IsA("Fire") or 
+           obj:IsA("Sparkles") then
+            obj:Destroy()
+            particleCount = particleCount + 1
+        end
+        
+        -- Удаляем световые эффекты
+        if obj:IsA("PointLight") or 
+           obj:IsA("SpotLight") or 
+           obj:IsA("SurfaceLight") then
+            obj:Destroy()
+            effectCount = effectCount + 1
+        end
+        
+        -- Удаляем другие эффекты
+        if obj:IsA("Beam") or 
+           obj:IsA("Trail") or 
+           obj:IsA("BloomEffect") or 
+           obj:IsA("BlurEffect") or 
+           obj:IsA("ColorCorrectionEffect") or 
+           obj:IsA("SunRaysEffect") or 
+           obj:IsA("DepthOfFieldEffect") then
+            obj:Destroy()
+            effectCount = effectCount + 1
+        end
+    end
+    
+    print("=== Результаты очистки ===")
+    print("Удалено текстур: " .. textureCount)
+    print("Удалено частиц: " .. particleCount)
+    print("Удалено эффектов: " .. effectCount)
+    print("Всего удалено: " .. (textureCount + particleCount + effectCount))
+end
+
+removeAllTexturesAndEffects()
